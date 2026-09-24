@@ -25,5 +25,4 @@ The analytical layer was constructed using virtual dimensions (Views) directly i
 * *dim_receptores_clinicos*: Validation of ER, PR, and HER2 clinical receptor status against transcriptomic levels.
 
 ## Author
-Ludimila de Araújo Costa
-LinkedIn [www.linkedin.com/in/ludimila-araújo-costa]
+[Ludimila de Araújo Costa - LinkedIn](https://www.linkedin.com/in/ludimila-araújo-costa)
