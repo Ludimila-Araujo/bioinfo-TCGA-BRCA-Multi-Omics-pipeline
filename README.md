@@ -26,4 +26,4 @@ The analytical layer was constructed using virtual dimensions (Views) directly i
 
 ## Author
 Ludimila de Araújo Costa
-LinkedIn[www.linkedin.com/in/ludimila-araújo-costa]
+LinkedIn [www.linkedin.com/in/ludimila-araújo-costa]
