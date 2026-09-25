@@ -1,0 +1,1 @@
+-- DQ-001: Staging Cardinality-- Purpose:-- Validate that the staging table contains the expected-- number of records after the ingestion process.-- Expected result:-- total_records = 705-- This validation does not modify the data.SELECTCOUNT(*) AS total_recordsFROM staging.brca_sample_wide;
