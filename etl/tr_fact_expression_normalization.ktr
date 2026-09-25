@@ -694,12 +694,12 @@ FROM staging.brca_sample_wide;</sql>
     <fields>
       <field>
         <name>rs_foxa1</name>
-        <value>FOXA_1</value>
+        <value>FOXA1</value>
         <norm>expression_level</norm>
       </field>
       <field>
         <name>rs_esr1</name>
-        <value>ESR_1</value>
+        <value>ESR1</value>
         <norm>expression_level</norm>
       </field>
       <field>
@@ -737,7 +737,7 @@ FROM staging.brca_sample_wide;</sql>
     <schema>analytical</schema>
     <table>fact_expression</table>
     <commit>2200</commit>
-    <truncate>N</truncate>
+    <truncate>Y</truncate>
     <ignore_errors>N</ignore_errors>
     <use_batch>Y</use_batch>
     <specify_fields>N</specify_fields>
