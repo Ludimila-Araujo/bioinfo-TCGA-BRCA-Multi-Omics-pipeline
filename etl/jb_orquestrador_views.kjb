@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
   <name>jb_orquestrador_views</name>
-  <description/>
+  <description>tr_staging_ingestion</description>
   <extended_description/>
   <job_version/>
   <job_status>0</job_status>
@@ -361,38 +361,13 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SQL_dim_pacient</name>
-      <description/>
-      <type>SQL</type>
-      <attributes/>
-      <sql>CREATE OR REPLACE VIEW dim_pacient AS
-SELECT DISTINCT
-	"vital.status",
-	"PR.Status",
-	"ER.Status",
-	"HER2.Final.Status",
-	"histological.type"
-FROM tb_brca_data;</sql>
-      <useVariableSubstitution>F</useVariableSubstitution>
-      <sqlfromfile>F</sqlfromfile>
-      <sqlfilename/>
-      <sendOneStatement>F</sendOneStatement>
-      <connection>conexao_local_postgres</connection>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>480</xloc>
-      <yloc>160</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Transformation</name>
+      <name>tr_staging_ingestion</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>C:\Users\ludim\Documents\Estudos_Ciencia_Engenharia_Dados\MBA_Engenharia_Ciencia_Dados\ETL e BI\Pentaho\Projeto_Final_Breast_Cancer_Kaggle\tr_transcriptomics_ingestion.ktr</filename>
+      <filename>C:/Users/ludim/Documents/Estudos_Ciencia_Engenharia_Dados/MBA_Engenharia_Ciencia_Dados/ETL e BI/Pentaho/Projeto_Final_Breast_Cancer_Kaggle/etl/tr_transcriptomics_ingestion.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -420,115 +395,252 @@ FROM tb_brca_data;</sql>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>272</xloc>
+      <xloc>256</xloc>
       <yloc>160</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SQL_dim_hist_signature</name>
+      <name>tr_dim_sample</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>C:/Users/ludim/Documents/Estudos_Ciencia_Engenharia_Dados/MBA_Engenharia_Ciencia_Dados/ETL e BI/Pentaho/Projeto_Final_Breast_Cancer_Kaggle/etl/tr_dim_sample_id.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <suppress_result_data>N</suppress_result_data>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>400</xloc>
+      <yloc>160</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>tr_fact_expression</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>C:/Users/ludim/Documents/Estudos_Ciencia_Engenharia_Dados/MBA_Engenharia_Ciencia_Dados/ETL e BI/Pentaho/Projeto_Final_Breast_Cancer_Kaggle/etl/tr_fact_expression_normalization.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <suppress_result_data>N</suppress_result_data>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>544</xloc>
+      <yloc>160</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>tr_fact_mutation</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>C:/Users/ludim/Documents/Estudos_Ciencia_Engenharia_Dados/MBA_Engenharia_Ciencia_Dados/ETL e BI/Pentaho/Projeto_Final_Breast_Cancer_Kaggle/etl/tr_fact_mutation_normalization.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <suppress_result_data>N</suppress_result_data>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>688</xloc>
+      <yloc>160</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>SQL_001_Create_Expression_View</name>
       <description/>
       <type>SQL</type>
       <attributes/>
-      <sql>CREATE OR REPLACE VIEW dim_hist_signature AS
-SELECT
-	"histological.type",
-	gene_name,
-	AVG(expression_level) AS avg_expression
-FROM tb_brca_data
-GROUP BY
-	"histological.type",
-	gene_name;</sql>
+      <sql/>
       <useVariableSubstitution>F</useVariableSubstitution>
-      <sqlfromfile>F</sqlfromfile>
-      <sqlfilename/>
+      <sqlfromfile>T</sqlfromfile>
+      <sqlfilename>C:\Users\ludim\Documents\Estudos_Ciencia_Engenharia_Dados\MBA_Engenharia_Ciencia_Dados\ETL e BI\Pentaho\Projeto_Final_Breast_Cancer_Kaggle\sql\analitycal\001. vw_expression_by_histology.sql</sqlfilename>
       <sendOneStatement>F</sendOneStatement>
       <connection>conexao_local_postgres</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>640</xloc>
+      <xloc>896</xloc>
       <yloc>160</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SQL_dim_mutational_impact</name>
+      <name>SQL_002_Create_Mutation_View</name>
       <description/>
       <type>SQL</type>
       <attributes/>
-      <sql>CREATE OR REPLACE VIEW dim_mutational_impact AS
-SELECT 
-	"histological.type",
-	gene_name,
-	CASE
-		WHEN gene_name = 'rs_CDH1' THEN mu_CDH1
-        WHEN gene_name = 'rs_TP53' THEN mu_TP53
-        WHEN gene_name = 'rs_PIK3CA' THEN mu_PIK3CA
-        WHEN gene_name = 'rs_GATA3' THEN mu_GATA3
-        WHEN gene_name = 'rs_FOXA1' THEN mu_FOXA1
-        ELSE NULL
-    END AS mutation_status,
-    AVG(expression_level) AS avg_expression
-FROM tb_brca_data
-WHERE gene_name IN ('rs_CDH1', 'rs_TP53', 'rs_PIK3CA', 'rs_GATA3', 'rs_FOXA1')
-GROUP BY 
-    "histological.type",
-    gene_name,
-    CASE 
-        WHEN gene_name = 'rs_CDH1' THEN mu_CDH1
-        WHEN gene_name = 'rs_TP53' THEN mu_TP53
-        WHEN gene_name = 'rs_PIK3CA' THEN mu_PIK3CA
-        WHEN gene_name = 'rs_GATA3' THEN mu_GATA3
-        WHEN gene_name = 'rs_FOXA1' THEN mu_FOXA1
-        ELSE NULL
-    END;</sql>
+      <sql/>
       <useVariableSubstitution>F</useVariableSubstitution>
-      <sqlfromfile>F</sqlfromfile>
-      <sqlfilename/>
+      <sqlfromfile>T</sqlfromfile>
+      <sqlfilename>C:\Users\ludim\Documents\Estudos_Ciencia_Engenharia_Dados\MBA_Engenharia_Ciencia_Dados\ETL e BI\Pentaho\Projeto_Final_Breast_Cancer_Kaggle\sql\analitycal\002. vw_mutation_by_histology.sql</sqlfilename>
       <sendOneStatement>F</sendOneStatement>
       <connection>conexao_local_postgres</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>832</xloc>
+      <xloc>1120</xloc>
       <yloc>160</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SQL_dim_clinical_receptors</name>
+      <name>SQL_003_Create_Mutation_Frequency_View</name>
       <description/>
       <type>SQL</type>
       <attributes/>
-      <sql>CREATE OR REPLACE VIEW dim_receptores_clinicos AS
-SELECT 
-    "ER.Status",
-    "PR.Status",
-    "HER2.Final.Status",
-    gene_name,
-    AVG(expression_level) AS avg_expression
-FROM tb_brca_data
-WHERE gene_name IN ('rs_ESR1', 'rs_PGR', 'rs_ERBB2')
-GROUP BY 
-    "ER.Status",
-    "PR.Status",
-    "HER2.Final.Status",
-    gene_name;</sql>
+      <sql/>
       <useVariableSubstitution>F</useVariableSubstitution>
-      <sqlfromfile>F</sqlfromfile>
-      <sqlfilename/>
+      <sqlfromfile>T</sqlfromfile>
+      <sqlfilename>C:\Users\ludim\Documents\Estudos_Ciencia_Engenharia_Dados\MBA_Engenharia_Ciencia_Dados\ETL e BI\Pentaho\Projeto_Final_Breast_Cancer_Kaggle\sql\analitycal\003. vw_mutation_frequency.sql</sqlfilename>
       <sendOneStatement>F</sendOneStatement>
       <connection>conexao_local_postgres</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1056</xloc>
-      <yloc>160</yloc>
+      <xloc>752</xloc>
+      <yloc>336</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>SQL_004_Create_Expression_Summary_View</name>
+      <description/>
+      <type>SQL</type>
+      <attributes/>
+      <sql/>
+      <useVariableSubstitution>F</useVariableSubstitution>
+      <sqlfromfile>T</sqlfromfile>
+      <sqlfilename>C:\Users\ludim\Documents\Estudos_Ciencia_Engenharia_Dados\MBA_Engenharia_Ciencia_Dados\ETL e BI\Pentaho\Projeto_Final_Breast_Cancer_Kaggle\sql\analitycal\004. vw_expression_summary.sql</sqlfilename>
+      <sendOneStatement>F</sendOneStatement>
+      <connection>conexao_local_postgres</connection>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1120</xloc>
+      <yloc>336</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>SQL_005_Create_FOXA1_Integration_View</name>
+      <description/>
+      <type>SQL</type>
+      <attributes/>
+      <sql/>
+      <useVariableSubstitution>F</useVariableSubstitution>
+      <sqlfromfile>T</sqlfromfile>
+      <sqlfilename>C:\Users\ludim\Documents\Estudos_Ciencia_Engenharia_Dados\MBA_Engenharia_Ciencia_Dados\ETL e BI\Pentaho\Projeto_Final_Breast_Cancer_Kaggle\sql\analitycal\005. vw_foxa1_mutation_expression.sql</sqlfilename>
+      <sendOneStatement>F</sendOneStatement>
+      <connection>conexao_local_postgres</connection>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>752</xloc>
+      <yloc>496</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>SQL_006_Create_FOXA1_Summary_View</name>
+      <description/>
+      <type>SQL</type>
+      <attributes/>
+      <sql/>
+      <useVariableSubstitution>F</useVariableSubstitution>
+      <sqlfromfile>T</sqlfromfile>
+      <sqlfilename>C:\Users\ludim\Documents\Estudos_Ciencia_Engenharia_Dados\MBA_Engenharia_Ciencia_Dados\ETL e BI\Pentaho\Projeto_Final_Breast_Cancer_Kaggle\sql\analitycal\006. vw_foxa1_mutation_expression_summary.sql</sqlfilename>
+      <sendOneStatement>F</sendOneStatement>
+      <connection>conexao_local_postgres</connection>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1088</xloc>
+      <yloc>496</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Success</name>
+      <description/>
+      <type>SUCCESS</type>
+      <attributes/>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>944</xloc>
+      <yloc>656</yloc>
       <attributes_kjc/>
     </entry>
   </entries>
   <hops>
     <hop>
       <from>Start</from>
-      <to>Transformation</to>
+      <to>tr_staging_ingestion</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -536,8 +648,8 @@ GROUP BY
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Transformation</from>
-      <to>SQL_dim_pacient</to>
+      <from>tr_staging_ingestion</from>
+      <to>tr_dim_sample</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -545,8 +657,8 @@ GROUP BY
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>SQL_dim_pacient</from>
-      <to>SQL_dim_hist_signature</to>
+      <from>tr_dim_sample</from>
+      <to>tr_fact_expression</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -554,8 +666,8 @@ GROUP BY
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>SQL_dim_hist_signature</from>
-      <to>SQL_dim_mutational_impact</to>
+      <from>tr_fact_expression</from>
+      <to>tr_fact_mutation</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -563,8 +675,62 @@ GROUP BY
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>SQL_dim_mutational_impact</from>
-      <to>SQL_dim_clinical_receptors</to>
+      <from>tr_fact_mutation</from>
+      <to>SQL_001_Create_Expression_View</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SQL_001_Create_Expression_View</from>
+      <to>SQL_002_Create_Mutation_View</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SQL_002_Create_Mutation_View</from>
+      <to>SQL_003_Create_Mutation_Frequency_View</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SQL_003_Create_Mutation_Frequency_View</from>
+      <to>SQL_004_Create_Expression_Summary_View</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SQL_004_Create_Expression_Summary_View</from>
+      <to>SQL_005_Create_FOXA1_Integration_View</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SQL_005_Create_FOXA1_Integration_View</from>
+      <to>SQL_006_Create_FOXA1_Summary_View</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SQL_006_Create_FOXA1_Summary_View</from>
+      <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
