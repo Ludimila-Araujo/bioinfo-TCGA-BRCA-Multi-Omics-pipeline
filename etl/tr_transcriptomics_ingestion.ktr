@@ -24551,7 +24551,7 @@
     <schema>staging</schema>
     <table>brca_sample_wide</table>
     <commit>1000</commit>
-    <truncate>N</truncate>
+    <truncate>Y</truncate>
     <ignore_errors>N</ignore_errors>
     <use_batch>Y</use_batch>
     <specify_fields>Y</specify_fields>
