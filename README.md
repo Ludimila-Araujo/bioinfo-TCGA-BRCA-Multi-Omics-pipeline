@@ -1,290 +1,108 @@
-## About the Project
+## About the Project 🧬
 
-This repository contains an academic project developed for the MBA in Data Science and Engineering.
+This project develops an end-to-end data engineering pipeline for the integration and analytical exploration of the TCGA-BRCA multi-omics dataset.
 
-The project implements an end-to-end data engineering pipeline for the integration and analytical exploration of the TCGA-BRCA multi-omics dataset, focusing on the molecular characterization of invasive ductal carcinoma (IDC) and invasive lobular carcinoma (ILC).
+The project focuses on the molecular characterization of invasive ductal carcinoma (IDC) and invasive lobular carcinoma (ILC), integrating selected clinical, gene expression, and somatic mutation data.
 
-The pipeline transforms a wide-format multi-omics dataset into a structured analytical model in PostgreSQL, integrating sample-level clinical and histological information with selected gene expression and mutation data. The resulting analytical layer supports the investigation of molecular patterns across histological groups and their visualization through an interactive Power BI dashboard.
+The resulting analytical model supports exploratory analysis and visualization through an interactive Power BI dashboard.
 
-The project combines data engineering, bioinformatics, and business intelligence practices to demonstrate a reproducible workflow from raw data ingestion to analytical visualization.
+## Bioinformatic Scope 🔬
 
-## Scientific Scope & Research Questions
+The project investigates molecular differences between invasive ductal carcinoma (IDC) and invasive lobular carcinoma (ILC) using selected clinical, gene expression, and somatic mutation data.
 
-The analytical scope of this project is the molecular characterization of invasive ductal carcinoma (IDC) and invasive lobular carcinoma (ILC) using selected clinical, gene expression, and somatic mutation features.
+The analysis focuses on:
 
-The central research question is:
+- Population and receptor profile by histological type
+- Mutation frequency across selected genes
+- Gene expression of selected markers
+- FOXA1 mutation–expression patterns
 
-> How can clinical and molecular data be integrated to identify patterns that contribute to the characterization and molecular stratification of breast tumors, with potential applications in precision oncology?
+The analysis is exploratory and descriptive, with no individual clinical prediction or treatment recommendation.
 
-The analytical workflow addresses the following questions:
-
-1. **Population characterization**  
-   How is the study population distributed according to histological type and selected clinical receptor characteristics?
-
-2. **Mutation profile**  
-   Which selected genes show differences in mutation frequency between IDC and ILC?
-
-3. **Gene expression profile**  
-   How does the expression of selected genes differ between IDC and ILC?
-
-4. **Mutation–expression integration**  
-   How does FOXA1 expression behave according to mutation status and histological type?
-
-The analyses are exploratory and descriptive. The project does not aim to establish clinical biomarkers, predict individual treatment response, infer causal relationships, or provide individual clinical recommendations.
-
-## Data Source & Dataset
+## Data Source 📊
 
 The project uses the **BRCA Multi-Omics (TCGA)** dataset distributed through Kaggle.
 
-The dataset contains 705 breast cancer samples and 1,936 molecular features distributed across multiple omics domains:
+The dataset contains 705 breast cancer samples and 1,936 molecular features across gene expression, copy number, somatic mutation, and protein expression data, together with clinical and histological metadata.
 
-- **604** gene expression features (`rs_`)
-- **860** copy number features (`cn_`)
-- **249** somatic mutation features (`mu_`)
-- **223** protein expression features (`pp_`)
+For this project, the analytical population includes 574 IDC samples and 131 ILC samples.
 
-The dataset also contains clinical and histological metadata used in the analytical model, including:
+## Data Architecture 🏗️
 
-- vital status
-- estrogen receptor (ER) status
-- progesterone receptor (PR) status
-- HER2 final status
-- histological type
+The pipeline follows a layered architecture:
 
-For this project, the analytical population comprises:
+**Source → Staging → Analytical Layer → BI**
 
-- **574** invasive ductal carcinoma (IDC) samples
-- **131** invasive lobular carcinoma (ILC) samples
+The source data are ingested into PostgreSQL through Pentaho Data Integration (PDI) 9.4. The staging layer preserves the original wide-format structure, while the analytical layer organizes selected clinical and molecular data for analysis.
 
-The original dataset is maintained in a wide format, with one row representing a sample and molecular features represented as columns. This structure is preserved in the staging layer before the data are normalized into the analytical model.
+The final analytical layer is consumed by Power BI for interactive visualization.
 
-### Data Provenance
+## Analytical Model 🧩
 
-The dataset was obtained from the Kaggle **BRCA Multi-Omics (TCGA)** dataset and used as the source dataset for the MBA project.
+The analytical layer is organized into:
 
-The scientific interpretation of the molecular characterization of invasive lobular and ductal breast carcinomas is supported by the study:
+| Structure | Grain | Purpose |
+|---|---|---|
+| `dim_sample` | Sample | Clinical and histological attributes |
+| `fact_expression` | Sample × Gene | Selected gene expression measurements |
+| `fact_mutation` | Sample × Gene | Selected mutation status |
 
-> Ciriello et al. (2015). *Comprehensive Molecular Portraits of Invasive Lobular Breast Cancer*. Cell.
+Analytical views derived from these structures provide the data used for the exploratory analyses and Power BI dashboard.
 
-The article is used as a scientific reference for the biological context and interpretation of the analytical questions, rather than as a direct source for the project dataset.	
+## ETL Pipeline ⚙️
 
-## Architecture & Tech Stack
+The ETL workflow is implemented in Pentaho Data Integration (PDI) 9.4, covering data ingestion, staging, normalization, and analytical view creation. The workflow is orchestrated through a Pentaho job, providing a reproducible path from the source dataset to the analytical layer consumed by Power BI.
 
-The project follows a layered data engineering architecture, separating data ingestion, staging, analytical transformation, and business intelligence.
+## Data Quality 🔎
 
-### Data Pipeline
+Data quality checks were performed in PostgreSQL before the analytical layer was used for visualization.
 
-```text
-Raw CSV
-   │
-   ▼
-Pentaho Data Integration (PDI)
-   │
-   ▼
-Staging Layer
-   │
-   ▼
-Analytical Layer
-   │
-   ├── Dimension
-   │    └── dim_sample
-   │
-   ├── Facts
-   │    ├── fact_expression
-   │    └── fact_mutation
-   │
-   └── Analytical Views
-        ├── Expression by Histology
-        ├── Mutation by Histology
-        ├── Mutation Frequency
-        ├── Expression Summary
-        └── FOXA1 Mutation–Expression Integration
-   │
-   ▼
-Power BI
+The validation process covered record counts, null values, categorical values, histological classification, and the integrity of the normalized analytical tables.
 
-### Technology Stack
-
-| Layer                 | Technology                   | Purpose                                          |
-| --------------------- | ---------------------------- | ------------------------------------------------ |
-| Data source           | CSV                          | Source multi-omics dataset                       |
-| ETL                   | Pentaho Data Integration 9.4 | Data ingestion, normalization, and orchestration |
-| Staging               | PostgreSQL                   | Persistent landing layer for the source dataset  |
-| Analytical database   | PostgreSQL                   | Dimensional and fact-based analytical model      |
-| Data validation       | SQL                          | Structural and data quality validation           |
-| Business Intelligence | Power BI                     | Interactive analytical dashboard                 |
-| Version control       | Git / GitHub                 | Source code and project versioning               |
-
-
-The architecture separates the wide source representation from the analytical model. The staging layer preserves the source structure, while the analytical layer organizes selected molecular and clinical attributes according to their analytical grain.
-
-The ETL workflow is orchestrated through Pentaho jobs, which execute the ingestion, normalization, analytical view creation, and validation steps in a controlled sequence.
-
-## Analytical Model
-
-The analytical layer is organized around sample-level data and selected molecular measurements.
-
-### Sample Dimension
-
-**Table:** `analytical.dim_sample`
-
-**Grain:** one row per sample.
-
-The dimension contains the sample identifier and selected clinical and histological attributes:
-
-- `sample_id`
-- `histological_type`
-- `er_status`
-- `pr_status`
-- `her2_final_status`
-- `vital_status`
-
-The `sample_id` is a technical identifier generated during ingestion and represents the original row of the source dataset. It is intentionally named `sample_id` rather than `patient_id`, since the available source data do not establish a separate patient-level identifier.
-
-### Expression Fact
-
-**Table:** `analytical.fact_expression`
-
-**Grain:** one row per sample and gene.
-
-The fact table contains selected gene expression measurements for:
-
-- `FOXA1`
-- `ESR1`
-- `PGR`
-
-The wide-format expression attributes from the staging layer are normalized into a long analytical structure containing:
-
-- `sample_id`
-- `gene_name`
-- `expression_value`
-
-### Mutation Fact
-
-**Table:** `analytical.fact_mutation`
-
-**Grain:** one row per sample and gene.
-
-The fact table contains mutation status for the selected molecular panel:
-
-- `CDH1`
-- `PTEN`
-- `TBX3`
-- `RUNX1`
-- `PIK3CA`
-- `TP53`
-- `GATA3`
-- `ERBB2`
-- `FOXA1`
-
-The normalized structure contains:
-
-- `sample_id`
-- `gene_name`
-- `mutation_status`
-
-### Analytical Views
-
-The analytical views provide structures optimized for downstream analysis and Power BI consumption:
-
-| View | Purpose |
-|---|---|
-| `vw_expression_by_histology` | Gene expression by sample and histological type |
-| `vw_mutation_by_histology` | Mutation status by sample and histological type |
-| `vw_mutation_frequency` | Mutation frequency by gene and histological type |
-| `vw_expression_summary` | Descriptive expression statistics by gene and histological type |
-| `vw_foxa1_mutation_expression` | FOXA1 mutation status integrated with expression and histological type |
-| `vw_foxa1_mutation_expression_summary` | Descriptive FOXA1 expression statistics by mutation status and histological type |
-
-This structure separates normalized analytical data from presentation-oriented views, allowing the same underlying facts to support different analytical questions and BI visualizations.
-
-## ETL Pipeline
-
-The ETL workflow is implemented in Pentaho Data Integration (PDI) 9.4 using transformations (`.ktr`) and a job (`.kjb`) for pipeline orchestration.
-
-### Staging Ingestion
-
-The source CSV is ingested into the PostgreSQL staging layer through the transformation:
+Validation scripts are organized in:
 
 ```text
-etl/tr_staging_ingestion.ktr
+sql/validations/
+```
 
-The digestion flow:
+These checks support the consistency of the data throughout the pipeline.
 
-CSV File Input
-      │
-      ▼
-Add Sequence
-      │
-      ▼
-Select Values
-      │
-      ▼
-Table Output
-      │
-      ▼
-staging.brca_sample_wide
+## Power BI Dashboard 📊
 
-A sequential sample_id is generated during ingestion to provide a technical identifier for each source row.
+The analytical layer is connected to an interactive Power BI dashboard designed to explore the molecular and clinical characteristics of IDC and ILC.
 
-Analytical Transformations
+The dashboard is organized into two pages:
 
-The staging dataset is subsequently transformed into normalized analytical structures:
+- **Overview**: population distribution, receptor profile, and selected gene expression.
+- **Molecular Profile**: mutation frequency and FOXA1 mutation–expression patterns.
 
-staging.brca_sample_wide
-        │
-        ├──► tr_dim_sample.ktr
-        │        └──► analytical.dim_sample
-        │
-        ├──► tr_fact_expression_normalization.ktr
-        │        └──► analytical.fact_expression
-        │
-        └──► tr_fact_mutation_normalization.ktr
-                 └──► analytical.fact_mutation
+The dashboard supports interactive exploration by histological type.
 
-The molecular transformations convert selected wide-format attributes into long-format analytical structures using Pentaho's row normalization capabilities.
+## Project Structure 📁
 
-Pipeline Orchestration
+```text
+├── dashboard/
+├── data/
+├── etl/
+└── sql/
+├── dashboard/    # Power BI dashboard
+├── data/         # Project data files
+├── etl/          # Pentaho transformations and orchestration
+└── sql/          # Analytical views and data validation scripts
+```
 
-The complete workflow is orchestrated by:
+## Technologies 🛠️
 
-etl/jb_orquestrador_views.kjb
+- **Pentaho Data Integration 9.4** — ETL and pipeline orchestration
+- **PostgreSQL** — data staging and analytical layer
+- **Power BI** — data visualization and interactive analysis
+- **Python / SQL** — data analysis and validation
+- **Git / GitHub** — version control
 
-The job executes the pipeline in sequence:
+## Author 👩‍💻
 
-Start
-  │
-  ▼
-TR_Staging_Ingestion
-  │
-  ▼
-TR_Dim_Sample
-  │
-  ▼
-TR_Fact_Expression
-  │
-  ▼
-TR_Fact_Mutation
-  │
-  ▼
-SQL_001_Create_Expression_View
-  │
-  ▼
-SQL_002_Create_Mutation_View
-  │
-  ▼
-SQL_003_Create_Mutation_Frequency_View
-  │
-  ▼
-SQL_004_Create_Expression_Summary_View
-  │
-  ▼
-SQL_005_Create_FOXA1_Integration_View
-  │
-  ▼
-SQL_006_Create_FOXA1_Summary_View
-  │
-  ▼
-Success
+**Ludimila de Araújo Costa**
 
-This orchestration provides a reproducible execution path from raw data ingestion to the analytical views consumed by the BI layer.
+MBA in Data Science and Engineering
+
+[LinkedIn](https://www.linkedin.com/in/ludimila-araújo-costa)
